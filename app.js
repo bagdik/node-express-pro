@@ -5,6 +5,7 @@ const connectDB = require('./db/connection');
 require('dotenv').config();
 
 // middlware
+app.use(express.static('./public'));
 app.use(express.json());
 
 // routes

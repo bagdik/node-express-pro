@@ -61,6 +61,10 @@ const deleteTask = async (req, res) => {
   }
 }
 
+const editTask = () => {
+  
+}
+
 module.exports = {
   getAllTasks,
   createTask,
