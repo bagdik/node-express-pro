@@ -22,7 +22,6 @@ const getTask = async (req, res) => {
   try {
     const { id: taskID } = req.params;
     const task = await Task.findOne({ _id: taskID });
-    console.log('task');
     if(!task) {
       return res.status(404).json({ msg: `No task with id ${taskID}` });
     }
@@ -61,8 +60,21 @@ const deleteTask = async (req, res) => {
   }
 }
 
-const editTask = () => {
-  
+const editTask = async (req, res) => {
+  try {
+    const { id: taskID } = req.params;
+    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
+      new: true,
+      runValidators: true,
+      overwrite: true,
+    });
+    if(!task) {
+      return res.status(404).json({ msg: `No task with id ${taskID}` });
+    }
+    res.status(200).json({ id: taskID, data: req.body }); 
+  } catch (error) {
+    res.status(500).json({ msg: error });   
+  }
 }
 
 module.exports = {
@@ -71,4 +83,5 @@ module.exports = {
   getTask,
   updateTask,
   deleteTask,
+  editTask,
 };
